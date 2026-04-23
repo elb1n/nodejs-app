@@ -2,7 +2,7 @@ pipeline {
   agent any
 
   environment {
-    IMAGE_NAME = "elb1n/nodejs-app"                          // Fix 1: added your Docker Hub username
+    IMAGE_NAME = "elb1n/nodejs-app"
     IMAGE_TAG  = "${BUILD_NUMBER}"
     KUBECONFIG = credentials('kubeconfig')
   }
@@ -27,7 +27,7 @@ pipeline {
 
     stage('Build Docker Image') {
       steps {
-        sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."    // Fix 2: was ${node}:${alpine}
+        sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
       }
     }
 
@@ -53,9 +53,7 @@ pipeline {
         sh """
           kubectl set image deployment/nodejs-app \
             nodejs-app=${IMAGE_NAME}:${IMAGE_TAG}
-          kubectl annotate deployment/nodejs-app \
-            kubernetes.io/change-cause="Build ${IMAGE_TAG}"  
-          kubectl rollout status deployment/nodejs-app        // Fix 3: removed --record (deprecated)
+          kubectl rollout status deployment/nodejs-app
         """
       }
     }
@@ -64,10 +62,10 @@ pipeline {
 
   post {
     success {
-      echo "Pipeline succeeded! Image ${IMAGE_NAME}:${IMAGE_TAG} deployed."
+      echo "Pipeline succeeded!"
     }
     failure {
-      echo "Pipeline failed on build ${IMAGE_TAG}. Check logs."
+      echo "Pipeline failed. Check logs."
     }
   }
 }
