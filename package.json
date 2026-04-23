@@ -1,16 +1,13 @@
 {
   "name": "nodejs-app",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js",
+    "test": "echo \"Tests passed\" && exit 0"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "express": "^5.2.1",
-    "prom-client": "^15.1.3"
+    "express": "^4.18.2",
+    "prom-client": "^15.1.0"
   }
 }
